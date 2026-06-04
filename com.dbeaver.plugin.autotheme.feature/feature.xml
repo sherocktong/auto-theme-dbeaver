@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.dbeaver.plugin.autotheme.feature"
+      label="DBeaver Auto Theme Feature"
+      version="1.0.0.qualifier"
+      provider-name="DBeaver Community">
+
+   <description url="https://github.com/kangtong/auto-theme-dbeaver">
+      Automatically switches DBeaver theme based on the OS system appearance.
+   </description>
+
+   <copyright>
+      Copyright (c) 2026 Bing Tong and contributors.
+   </copyright>
+
+   <license url="https://www.eclipse.org/legal/epl-2.0/">
+      Eclipse Public License v2.0
+   </license>
+
+   <plugin
+         id="com.dbeaver.plugin.autotheme"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

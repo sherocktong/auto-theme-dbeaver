@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature id="com.dbeaver.plugin.autotheme.feature" version="0.0.0">
+      <category name="com.dbeaver.plugin.autotheme.category"/>
+   </feature>
+   <category-def name="com.dbeaver.plugin.autotheme.category" label="DBeaver Auto Theme">
+      <description>
+         Automatically switches DBeaver theme based on the OS system appearance.
+      </description>
+   </category-def>
+</site>
