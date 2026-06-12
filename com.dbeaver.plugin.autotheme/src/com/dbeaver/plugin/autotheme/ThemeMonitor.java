@@ -47,7 +47,12 @@ public class ThemeMonitor implements IStartup {
                     ? AutoThemePreferences.getDarkThemeId()
                     : AutoThemePreferences.getLightThemeId();
             System.out.println("[AutoTheme] Startup sync: switching to " + targetThemeId);
-            ThemeSwitchJob.switchToTheme(targetThemeId);
+            // Delay the startup repaint so the workbench finishes painting all its
+            // shells first. Without the delay the shell list is empty or partially
+            // constructed and applyStyles has nothing to repaint, leaving the pink
+            // background visible.
+            ThemeSwitchJob job = new ThemeSwitchJob(targetThemeId);
+            job.schedule(2000);
         }
 
         try {

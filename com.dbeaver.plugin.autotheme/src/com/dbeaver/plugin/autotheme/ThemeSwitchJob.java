@@ -66,17 +66,23 @@ public class ThemeSwitchJob extends UIJob {
         }
 
         ITheme currentTheme = engine.getActiveTheme();
-        if (currentTheme != null && themeId.equals(currentTheme.getId())) {
-            System.out.println("[AutoTheme] ThemeSwitchJob: already on " + themeId + ", skipping.");
-            return Status.OK_STATUS;
-        }
+        boolean alreadyOnTheme = currentTheme != null && themeId.equals(currentTheme.getId());
 
         try {
-            engine.setTheme(targetTheme, true);
-            System.out.println("[AutoTheme] ThemeSwitchJob: switched to " + themeId);
+            if (!alreadyOnTheme) {
+                // Apply transiently so Eclipse does not persist the theme selection.
+                // The IStartup hook re-applies it on every launch while the plugin is
+                // installed; removing the plugin leaves no stale theme state behind.
+                engine.setTheme(targetTheme, false);
+                System.out.println("[AutoTheme] ThemeSwitchJob: switched to " + themeId);
+            } else {
+                System.out.println("[AutoTheme] ThemeSwitchJob: already on " + themeId + ", repainting.");
+            }
 
-            // Re-apply CSS to every widget so the theme paints cleanly
-            // (mirrors what DBeaver's own Appearance page does)
+            // Always force a full CSS re-application and layout pass on every open
+            // shell. setTheme(false) skips the workbench's normal restore path, which
+            // leaves some shells unpainted (visible as a pink/salmon background).
+            // This also corrects any missed repaints from the early-startup sync.
             Display display2 = Display.getCurrent();
             if (display2 != null && !display2.isDisposed()) {
                 for (org.eclipse.swt.widgets.Shell shell : display2.getShells()) {

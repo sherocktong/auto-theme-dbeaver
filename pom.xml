@@ -13,7 +13,7 @@
     <description>Automatically switches DBeaver theme based on OS system appearance.</description>
 
     <properties>
-        <tycho.version>2.7.5</tycho.version>
+        <tycho.version>4.0.9</tycho.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <eclipse-repo.url>https://download.eclipse.org/releases/2024-09/</eclipse-repo.url>
         <dbeaver-repo.url>https://dbeaver.io/update/latest/</dbeaver-repo.url>
@@ -43,11 +43,20 @@
             </plugin>
             <plugin>
                 <groupId>org.eclipse.tycho</groupId>
+                <artifactId>tycho-compiler-plugin</artifactId>
+                <version>${tycho.version}</version>
+                <configuration>
+                    <release>17</release>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
                 <artifactId>target-platform-configuration</artifactId>
                 <version>${tycho.version}</version>
                 <configuration>
                     <resolver>p2</resolver>
                     <pomDependencies>consider</pomDependencies>
+                    <!-- Resolve against JavaSE-17 profile even when running under JDK 21 -->
                     <executionEnvironment>JavaSE-17</executionEnvironment>
                     <environments>
                         <environment>
